@@ -19,5 +19,4 @@ jobs:
         arduino-cli core update-index
         arduino-cli core install esp32:esp32
     - name: Build Sketch
-      run: |
-        arduino-cli compile --fqbn esp32:esp32:esp32 esp32-smart-controller.ino
+       run: arduino-cli compile --fqbn esp32:esp32:esp32doit-devkit-v1 --output-dir output esp32-smart-controller.ino
