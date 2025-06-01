@@ -9,14 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    
     - name: Set up Arduino CLI
       uses: arduino/setup-arduino-cli@v1
-    
-        
+     
     - name: Install ESP32 board platform
       run: |
         arduino-cli core update-index
         arduino-cli core install esp32:esp32
     - name: Build Sketch
-       run: arduino-cli compile --fqbn esp32:esp32:esp32doit-devkit-v1 --output-dir output esp32-smart-controller.ino
+      run: |
+        arduino-cli compile --fqbn esp32:esp32:esp32 esp32-smart-controller.ino
