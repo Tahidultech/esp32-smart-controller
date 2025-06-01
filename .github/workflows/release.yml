@@ -1,0 +1,29 @@
+name: Compile & Upload BIN
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Arduino CLI
+      uses: arduino/setup-arduino-cli@v1
+      with:
+        version: latest
+    - name: Install ESP32 platform
+      run: |
+        arduino-cli core update-index
+        arduino-cli core install esp32:esp32
+    - name: Compile BIN
+      run: |
+        arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir ./build esp32-smart-controller.ino
+    - name: Upload BIN as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: esp32-rainmaker-bin
+        path: build/*.bin
