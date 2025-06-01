@@ -1,0 +1,26 @@
+ESP32 DEVKITV1 Flashing Instructions
+------------------------------------
+
+1. Required Binaries:
+   - bootloader.bin      (offset 0x1000)
+   - partitions_8mb.bin  (offset 0x8000)
+   - boot_app0.bin       (offset 0xe000)
+   - firmware.bin        (from Arduino build, offset 0x10000)
+
+2. Flash Using esptool.py:
+
+   esptool.py --chip esp32 --baud 921600 --before default_reset --after hard_reset \
+     write_flash -z \
+     0x1000   bootloader.bin \
+     0x8000   partitions_8mb.bin \
+     0xe000   boot_app0.bin \
+     0x10000  firmware.bin
+
+3. (Optional) Use Arduino IDE:
+   - Select ESP32 Dev Module, 8MB partition table.
+   - Upload firmware via "Sketch > Upload"
+
+4. Provision RainMaker using the official Espressif app.
+
+NOTE:
+Replace the placeholder .bin files in this repo with Espressif's official ones for your ESP32 board.
